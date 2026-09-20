@@ -4,3 +4,4 @@ Politique de Télétravail et Avantages RH (Entreprise SecureCorp)
 2. Remboursement Navigo : SecureCorp prend en charge 50 % de l'abonnement de transport public des salariés.
 3. Mutuelle : L'assurance santé entreprise est prise en charge à 100 % par l'employeur pour la formule de base.
 4. Contact RH : Pour toute demande concernant la paie, contactez rh@securecorp.local.
+5. Sécurité informatique : Votre mot de passe de session doit comporter 12 caractères minimum.
