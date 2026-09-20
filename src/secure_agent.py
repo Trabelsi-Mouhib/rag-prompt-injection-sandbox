@@ -1,3 +1,4 @@
+import os
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -5,6 +6,8 @@ from langchain_ollama import OllamaLLM, OllamaEmbeddings
 from langchain_chroma import Chroma
 from mitigations import sanitize_context, inspect_output_dlp
 from logger import log_security_event
+
+OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
 
 CHROMA_DB_DIR = "./chroma_db"
 
@@ -44,7 +47,7 @@ Question : {query}
 Réponse :"""
 
     # Fixation de temperature=0 pour un comportement 100% déterministe
-    llm = OllamaLLM(model="llama3.2:1b")
+    llm = OllamaLLM(model="llama3.2:1b", base_url=OLLAMA_HOST)
     raw_response = llm.invoke(prompt)
 
     # 2. FILTRE DE SORTIE (DLP)

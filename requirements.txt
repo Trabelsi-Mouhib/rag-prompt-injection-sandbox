@@ -1,6 +1,7 @@
 langchain-core
 langchain-community
 langchain-ollama
+langchain-chroma
 chromadb
 pypdf
 fastapi

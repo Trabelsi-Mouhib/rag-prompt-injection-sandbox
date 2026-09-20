@@ -1,0 +1,17 @@
+
+
+services:
+  rag-sandbox:
+    build: .
+    container_name: rag_prompt_injection_sandbox
+    # Permet au conteneur de communiquer avec Ollama qui tourne sur ton système hôte (Kali)
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - OLLAMA_HOST=http://host.docker.internal:11434
+    # Montage de volume : toute modification locale (code/txt) est répercutée instantanément
+    volumes:
+      - .:/app
+    # Permet d'exécuter des commandes interactives si besoin
+    stdin_open: true
+    tty: true

@@ -1,8 +1,11 @@
+import os
 import warnings
 warnings.filterwarnings('ignore')
 
 from langchain_ollama import OllamaLLM, OllamaEmbeddings
 from langchain_chroma import Chroma
+
+OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
 
 CHROMA_DB_DIR = "./chroma_db"
 
@@ -26,7 +29,7 @@ Voici le contexte extrait de la base documentaire :
 Question de l'utilisateur : {query}
 Réponse :"""
 
-    llm = OllamaLLM(model="llama3.2:1b")
+    llm = OllamaLLM(model="llama3.2:1b", base_url=OLLAMA_HOST)
     return llm.invoke(prompt)
 
 if __name__ == "__main__":
