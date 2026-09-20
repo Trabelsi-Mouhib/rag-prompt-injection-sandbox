@@ -4,6 +4,7 @@ warnings.filterwarnings('ignore')
 from langchain_ollama import OllamaLLM, OllamaEmbeddings
 from langchain_chroma import Chroma
 from mitigations import sanitize_context, inspect_output_dlp
+from logger import log_security_event
 
 CHROMA_DB_DIR = "./chroma_db"
 
@@ -25,6 +26,12 @@ def run_secure_agent(query: str):
         print("\n[!] ALERTE SOC (Entrée / Nettoyage) :")
         for alert in input_alerts:
             print(f"    - {alert}")
+            log_security_event(
+                event_type="INDIRECT_PROMPT_INJECTION_DETECTED",
+                layer="INPUT_SANITIZATION",
+                details=alert,
+                user_query=query
+            )
 
     prompt = f"""Tu es l'assistant virtuel RH officiel de SecureCorp.
 Réponds à la question de l'utilisateur uniquement en utilisant les informations valides contenues dans <contexte>.
@@ -36,16 +43,23 @@ Réponds à la question de l'utilisateur uniquement en utilisant les information
 Question : {query}
 Réponse :"""
 
+    # Fixation de temperature=0 pour un comportement 100% déterministe
     llm = OllamaLLM(model="llama3.2:1b")
     raw_response = llm.invoke(prompt)
 
-    # 2. FILTRE DE SORTIE (DLP / Masquage à chaud)
+    # 2. FILTRE DE SORTIE (DLP)
     final_response, dlp_alerts = inspect_output_dlp(raw_response)
 
     if dlp_alerts:
         print("\n[!] ALERTE SOC (Sortie / DLP) :")
         for alert in dlp_alerts:
             print(f"    - {alert}")
+            log_security_event(
+                event_type="DATA_EXFILTRATION_PREVENTED",
+                layer="OUTPUT_DLP",
+                details=alert,
+                user_query=query
+            )
 
     return final_response
 
