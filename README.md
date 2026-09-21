@@ -1,6 +1,6 @@
-# 🛡️ RAG Prompt Injection Sandbox
+# RAG Prompt Injection Sandbox
 
-An industrial-grade, containerized Proof of Concept (PoC) demonstrating **Indirect Prompt Injection** vulnerabilities in Retrieval-Augmented Generation (RAG) agentic architectures and validating multi-layer mitigations aligned with the OWASP LLM Top 10 framework.
+A containerized Proof of Concept (PoC) demonstrating **Indirect Prompt Injection** vulnerabilities in Retrieval-Augmented Generation (RAG) agentic architectures and validating multi-layer mitigations aligned with the OWASP LLM Top 10 framework.
 
 ---
 
